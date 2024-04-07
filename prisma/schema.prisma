@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Header {
+  id    String @id @default(uuid())
+  title String
+  logo  String
+}
+
+model Provider {
+  id        String @id @default(uuid())
+  name      String
+  address   String
+  telephone String
+  email     String
+}
+
+model Parent {
+  id        String  @id @default(uuid())
+  name      String
+  address   String
+  telephone String
+  email     String
+  Child     Child[]
+  Week      Week[]
+}
+
+model Child {
+  id              String   @id @default(uuid())
+  number_of_hours String
+  name            String
+  enrollment      DateTime
+  discharge       String
+  birth           DateTime
+  parent          Parent?  @relation(fields: [parentId], references: [id])
+  parentId        String?
+  Week            Week[]
+}
+
+model Month {
+  id    String @id @default(uuid())
+  month String
+}
+
+model Year {
+  id   String @id @default(uuid())
+  year Int
+}
+
+model History {
+  id           String   @id @default(uuid())
+  amount       String
+  parent_name  String
+  payment_date DateTime
+  year         String
+}
+
+model Week {
+  id                 String  @id @default(uuid())
+  week               String
+  month              String
+  year               String
+  parent             Parent? @relation(fields: [parentId], references: [id])
+  parentId           String?
+  child              Child?  @relation(fields: [childId], references: [id])
+  childId            String?
+  child_name         String
+  dates              String
+  total_time_in_week String
+  total_days         Int
+  days               Day[]
+}
+
+model Day {
+  id        String  @id @default(uuid())
+  title     String
+  arrived   String?
+  isGone    String?
+  completed Boolean
+  disabled  Boolean
+  week      Week    @relation(fields: [weekId], references: [id])
+  weekId    String
+}
