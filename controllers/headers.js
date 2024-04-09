@@ -1,4 +1,4 @@
-const { prisma } = require("../prisma/prisma-client");
+const { prisma } = require('../prisma/prisma-client');
 
 /* Retrieve all headers from the database */
 const all = async (req, res) => {
@@ -7,7 +7,7 @@ const all = async (req, res) => {
         res.status(200).json(headers);
     } catch (error) {
         res.status(400).json({
-            message: "Failed to fetch headers from the database",
+            message: 'Failed to fetch headers from the database',
             error,
         });
     }
@@ -19,24 +19,22 @@ const add = async (req, res) => {
 
     if (!data.title || !data.logo) {
         return res.status(400).json({
-            message: "All fields are required for adding a new header",
+            message: 'All fields are required for adding a new header',
         });
     }
 
     try {
         const header = await prisma.header.create({
-            data: {
-                ...data,
-            },
+            data,
         });
 
         res.status(201).json({
-            message: "The new header has been successfully added to the database",
+            message: 'The new header has been successfully added to the database',
             added_data: header,
         });
     } catch (error) {
         res.status(500).json({
-            message: "Failed to add the new header to the database",
+            message: 'Failed to add the new header to the database',
             error,
         });
     }
@@ -56,12 +54,12 @@ const edit = async (req, res) => {
         });
 
         res.status(200).json({
-            message: "Successfully updated the header data",
+            message: 'Successfully updated the header data',
             updated_data: header,
         });
     } catch (error) {
         res.status(500).json({
-            message: "Failed to update the header data",
+            message: 'Failed to update the header data',
             error,
         });
     }
@@ -79,12 +77,12 @@ const remove = async (req, res) => {
         });
 
         res.status(200).json({
-            message: "Successfully deleted the header data",
+            message: 'Successfully deleted the header data',
             removed_data: header,
         });
     } catch (error) {
         return res.status(500).json({
-            message: "Failed to delete the header data",
+            message: 'Failed to delete the header data',
             error,
         });
     }

@@ -15,9 +15,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', require('./routes/index'));
-app.use('/api/headers', require('./routes/headers'));
-app.use('/api/providers', require('./routes/providers'));
-app.use('/api/parents', require('./routes/parents'));
+app.use('/api/header', require('./routes/headers'));
+app.use('/api/provider', require('./routes/providers'));
+app.use('/api/parent', require('./routes/parents'));
 app.use('/api/children', require('./routes/children'));
+app.use('/api/month', require('./routes/months'));
+app.use('/api/year', require('./routes/years'));
+app.use('/api/story', require('./routes/stories'));
+app.use('/api/week', require('./routes/weeks'));
+app.use('/api/file', require('./routes/files'));
 
 module.exports = app;

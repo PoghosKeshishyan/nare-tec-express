@@ -1,0 +1,13 @@
+history change to stories
+parent - remove Week[]
+
+                                       ----
+child -> number_of_hours,                  |
+history -> year                            |
+week -> week, year, total_time_in_week     |  -  Int
+                                           |
+                                       ----
+
+all dateTimes -> STRING
+
+week -> parentID,

@@ -1,4 +1,4 @@
-const { prisma } = require("../prisma/prisma-client");
+const { prisma } = require('../prisma/prisma-client');
 
 /* Retrieve all parents from the database */
 const all = async (req, res) => {
@@ -7,7 +7,7 @@ const all = async (req, res) => {
         res.status(200).json(parents);
     } catch (error) {
         res.status(400).json({
-            message: "Failed to fetch parents from the database",
+            message: 'Failed to fetch parents from the database',
             error,
         });
     }
@@ -26,14 +26,14 @@ const parent = async (req, res) => {
 
         if (!parent) {
             return res.status(404).json({
-                message: "Parent not found",
+                message: 'Parent not found',
             });
         }
 
         res.status(200).json(parent);
     } catch (error) {
         res.status(500).json({
-            message: "Failed to retrieve the parent data",
+            message: 'Failed to retrieve the parent data',
             error,
         });
     }
@@ -45,24 +45,22 @@ const add = async (req, res) => {
 
     if (!data.name || !data.address || !data.telephone || !data.email) {
         return res.status(400).json({
-            message: "All fields are required for adding a new parent",
+            message: 'All fields are required for adding a new parent',
         });
     }
 
     try {
         const parent = await prisma.parent.create({
-            data: {
-                ...data,
-            },
+            data,
         });
 
         res.status(201).json({
-            message: "The new parent has been successfully added to the database",
+            message: 'The new parent has been successfully added to the database',
             added_data: parent,
         });
     } catch (error) {
         res.status(500).json({
-            message: "Failed to add the new parent to the database",
+            message: 'Failed to add the new parent to the database',
             error,
         });
     }
@@ -82,12 +80,12 @@ const edit = async (req, res) => {
         });
 
         res.status(200).json({
-            message: "Successfully updated the parent data",
+            message: 'Successfully updated the parent data',
             updated_data: parent,
         });
     } catch (error) {
         res.status(500).json({
-            message: "Failed to update the parent data",
+            message: 'Failed to update the parent data',
             error,
         });
     }
@@ -105,12 +103,12 @@ const remove = async (req, res) => {
         });
 
         res.status(200).json({
-            message: "Successfully deleted the parent data",
+            message: 'Successfully deleted the parent data',
             removed_data: parent,
         });
     } catch (error) {
         return res.status(500).json({
-            message: "Failed to delete the parent data",
+            message: 'Failed to delete the parent data',
             error,
         });
     }

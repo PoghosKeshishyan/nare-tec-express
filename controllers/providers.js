@@ -1,4 +1,4 @@
-const { prisma } = require("../prisma/prisma-client");
+const { prisma } = require('../prisma/prisma-client');
 
 /* Retrieve all providers from the database */
 const all = async (req, res) => {
@@ -7,7 +7,7 @@ const all = async (req, res) => {
         res.status(200).json(providers);
     } catch (error) {
         res.status(400).json({
-            message: "Failed to fetch providers from the database",
+            message: 'Failed to fetch providers from the database',
             error,
         });
     }
@@ -19,24 +19,22 @@ const add = async (req, res) => {
 
     if (!data.name || !data.address || !data.telephone || !data.email) {
         return res.status(400).json({
-            message: "All fields are required for adding a new provider",
+            message: 'All fields are required for adding a new provider',
         });
     }
 
     try {
         const provider = await prisma.provider.create({
-            data: {
-                ...data,
-            },
+            data,
         });
 
         res.status(201).json({
-            message: "The new provider has been successfully added to the database",
+            message: 'The new provider has been successfully added to the database',
             added_data: provider,
         });
     } catch (error) {
         res.status(500).json({
-            message: "Failed to add the new provider to the database",
+            message: 'Failed to add the new provider to the database',
             error,
         });
     }
@@ -56,12 +54,12 @@ const edit = async (req, res) => {
         });
 
         res.status(200).json({
-            message: "Successfully updated the provider data",
+            message: 'Successfully updated the provider data',
             updated_data: provider,
         });
     } catch (error) {
         res.status(500).json({
-            message: "Failed to update the provider data",
+            message: 'Failed to update the provider data',
             error,
         });
     }
@@ -79,12 +77,12 @@ const remove = async (req, res) => {
         });
 
         res.status(200).json({
-            message: "Successfully deleted the provider data",
+            message: 'Successfully deleted the provider data',
             removed_data: provider,
         });
     } catch (error) {
         return res.status(500).json({
-            message: "Failed to delete the provider data",
+            message: 'Failed to delete the provider data',
             error,
         });
     }
