@@ -3,7 +3,7 @@ const { prisma } = require('../prisma/prisma-client');
 /* Retrieve all stories from the database */
 const all = async (req, res) => {
     try {
-        const stories = await prisma.history.findMany();
+        const stories = await prisma.story.findMany();
         res.status(200).json(stories);
     } catch (error) {
         res.status(400).json({
@@ -18,7 +18,7 @@ const byYear = async (req, res) => {
     const year = req.params.year;
 
     try {
-        const story = await prisma.history.findMany({
+        const story = await prisma.story.findMany({
             where: {
                 year,
             },
@@ -50,7 +50,7 @@ const add = async (req, res) => {
     }
 
     try {
-        const story = await prisma.history.create({
+        const story = await prisma.story.create({
             data: {
                 amount: data.amount,
                 parent_name: data.parent_name,
@@ -77,7 +77,7 @@ const edit = async (req, res) => {
     const data = req.body;
 
     try {
-        const story = await prisma.history.update({
+        const story = await prisma.story.update({
             where: {
                 id,
             },
@@ -101,7 +101,7 @@ const remove = async (req, res) => {
     const id = req.params.id;
 
     try {
-        const story = await prisma.history.delete({
+        const story = await prisma.story.delete({
             where: {
                 id,
             },

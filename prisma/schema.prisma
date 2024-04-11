@@ -35,14 +35,14 @@ model Parent {
 }
 
 model Child {
-  id              String   @id @default(uuid())
-  number_of_hours String
+  id              String  @id @default(uuid())
+  number_of_hours Int
   name            String
-  enrollment      DateTime
-  discharge       String   @default("-")
-  birth           DateTime
-  parent          Parent?  @relation(fields: [parentId], references: [id])
-  parentId        String?
+  enrollment      String
+  discharge       String  @default("-")
+  birth           String
+  parent          Parent? @relation(fields: [parent_id], references: [id])
+  parent_id       String?
   Week            Week[]
 }
 
@@ -56,23 +56,23 @@ model Year {
   year Int
 }
 
-model History {
-  id           String   @id @default(uuid())
+model Story {
+  id           String @id @default(uuid())
   amount       String
   parent_name  String
-  payment_date DateTime
-  year         String
+  payment_date String
+  year         Int
 }
 
 model Week {
   id                 String  @id @default(uuid())
-  week               String
+  week               Int
   month              String
-  year               String
-  parent             Parent? @relation(fields: [parentId], references: [id])
-  parentId           String?
-  child              Child?  @relation(fields: [childId], references: [id])
-  childId            String?
+  year               Int
+  parent             Parent? @relation(fields: [parent_id], references: [id])
+  parent_id          String?
+  child              Child?  @relation(fields: [child_id], references: [id])
+  child_id           String?
   child_name         String
   dates              String
   total_time_in_week String
@@ -87,6 +87,6 @@ model Day {
   isGone    String?
   completed Boolean
   disabled  Boolean
-  week      Week    @relation(fields: [weekId], references: [id])
-  weekId    String
+  week      Week    @relation(fields: [week_id], references: [id])
+  week_id   String
 }

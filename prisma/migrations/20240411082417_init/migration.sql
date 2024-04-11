@@ -26,13 +26,13 @@ CREATE TABLE "Parent" (
 -- CreateTable
 CREATE TABLE "Child" (
     "id" TEXT NOT NULL PRIMARY KEY,
-    "number_of_hours" TEXT NOT NULL,
+    "number_of_hours" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
-    "enrollment" DATETIME NOT NULL,
-    "discharge" TEXT NOT NULL,
-    "birth" DATETIME NOT NULL,
-    "parentId" TEXT,
-    CONSTRAINT "Child_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "Parent" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+    "enrollment" TEXT NOT NULL,
+    "discharge" TEXT NOT NULL DEFAULT '-',
+    "birth" TEXT NOT NULL,
+    "parent_id" TEXT,
+    CONSTRAINT "Child_parent_id_fkey" FOREIGN KEY ("parent_id") REFERENCES "Parent" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -48,28 +48,28 @@ CREATE TABLE "Year" (
 );
 
 -- CreateTable
-CREATE TABLE "History" (
+CREATE TABLE "Story" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "amount" TEXT NOT NULL,
     "parent_name" TEXT NOT NULL,
-    "payment_date" DATETIME NOT NULL,
-    "year" TEXT NOT NULL
+    "payment_date" TEXT NOT NULL,
+    "year" INTEGER NOT NULL
 );
 
 -- CreateTable
 CREATE TABLE "Week" (
     "id" TEXT NOT NULL PRIMARY KEY,
-    "week" TEXT NOT NULL,
+    "week" INTEGER NOT NULL,
     "month" TEXT NOT NULL,
-    "year" TEXT NOT NULL,
-    "parentId" TEXT,
-    "childId" TEXT,
+    "year" INTEGER NOT NULL,
+    "parent_id" TEXT,
+    "child_id" TEXT,
     "child_name" TEXT NOT NULL,
     "dates" TEXT NOT NULL,
     "total_time_in_week" TEXT NOT NULL,
     "total_days" INTEGER NOT NULL,
-    CONSTRAINT "Week_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "Parent" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT "Week_childId_fkey" FOREIGN KEY ("childId") REFERENCES "Child" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+    CONSTRAINT "Week_parent_id_fkey" FOREIGN KEY ("parent_id") REFERENCES "Parent" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT "Week_child_id_fkey" FOREIGN KEY ("child_id") REFERENCES "Child" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -80,6 +80,6 @@ CREATE TABLE "Day" (
     "isGone" TEXT,
     "completed" BOOLEAN NOT NULL,
     "disabled" BOOLEAN NOT NULL,
-    "weekId" TEXT NOT NULL,
-    CONSTRAINT "Day_weekId_fkey" FOREIGN KEY ("weekId") REFERENCES "Week" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    "week_id" TEXT NOT NULL,
+    CONSTRAINT "Day_week_id_fkey" FOREIGN KEY ("week_id") REFERENCES "Week" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
