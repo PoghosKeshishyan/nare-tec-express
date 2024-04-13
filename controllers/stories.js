@@ -15,7 +15,7 @@ const all = async (req, res) => {
 
 /* Retrieve a specific story by year from the database */
 const byYear = async (req, res) => {
-    const year = req.params.year;
+    const year = parseInt(req.params.year);
 
     try {
         const story = await prisma.story.findMany({
@@ -24,7 +24,7 @@ const byYear = async (req, res) => {
             },
         });
 
-        if (!story) {
+        if (!story.length) {
             return res.status(404).json({
                 message: `Story for the year ${year} not found`,
             });
@@ -51,12 +51,7 @@ const add = async (req, res) => {
 
     try {
         const story = await prisma.story.create({
-            data: {
-                amount: data.amount,
-                parent_name: data.parent_name,
-                payment_date: new Date(data.payment_date),
-                year: data.year,
-            },
+            data,
         });
 
         res.status(201).json({

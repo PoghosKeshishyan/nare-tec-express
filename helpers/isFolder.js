@@ -1,4 +1,5 @@
 /* Function to check if a path is a folder */
+
 const fs = require('fs');
 
 const isFolder = (path) => {

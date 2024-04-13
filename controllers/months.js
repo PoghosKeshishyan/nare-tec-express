@@ -13,32 +13,6 @@ const all = async (req, res) => {
     }
 };
 
-/* Retrieve a specific month from the database */
-const month = async (req, res) => {
-    const id = req.params.id;
-
-    try {
-        const month = await prisma.month.findUnique({
-            where: {
-                id,
-            },
-        });
-
-        if (!month) {
-            return res.status(404).json({
-                message: 'Month not found',
-            });
-        }
-
-        res.status(200).json(month);
-    } catch (error) {
-        res.status(500).json({
-            message: 'Failed to retrieve the month data',
-            error,
-        });
-    }
-};
-
 /* Add a new month to the database */
 const add = async (req, res) => {
     const data = req.body;
@@ -116,7 +90,6 @@ const remove = async (req, res) => {
 
 module.exports = {
     all,
-    month,
     add,
     edit,
     remove,

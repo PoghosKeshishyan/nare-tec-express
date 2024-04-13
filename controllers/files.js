@@ -1,11 +1,12 @@
 const fs = require('fs');
+const path = require('path');
 const { exec } = require('child_process');
 const { isFolder } = require('../helpers/isFolder');
 const { getRandomInt } = require('../helpers/getRandomInt');
 
-/* Retrieve all files from the BASE_FOLDER */
+/* Retrieve all files from the BASE_FOLDER_PATH */
 const all = (req, res) => {
-    const base = process.env.BASE_FOLDER;
+    const base = process.env.BASE_FOLDER_PATH;
     let path = '';
 
     if ('path' in req.query) {
@@ -48,10 +49,32 @@ const all = (req, res) => {
     }
 };
 
+/* Retrieve URLs of all images from the 'public/images' directory */
+const images = (req, res) => {
+    const imageDir = path.join(__dirname, '../public/images');
+
+    fs.readdir(imageDir, (err, files) => {
+        if (err) {
+            console.error('Error reading images directory:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+            return;
+        }
+
+        const imageUrls = {};
+
+        files.forEach(file => {
+            const imageName = path.parse(file).name;
+            imageUrls[imageName] = `/images/${file}`;
+        });
+
+        res.json({ images: imageUrls });
+    });
+};
+
 /* We open the file in the local version */
 const openFile = (req, res) => {
     const { path, filename } = req.body;
-    const base = process.env.BASE_FOLDER;
+    const base = process.env.BASE_FOLDER_PATH;
 
     if (!filename) {
         res.status(400).send('File parameter is missing');
@@ -91,7 +114,7 @@ const openFile = (req, res) => {
 /* We open the folder in the local version */
 const openFolder = (req) => {
     const { folderPath } = req.body;
-    const base = process.env.BASE_FOLDER;
+    const base = process.env.BASE_FOLDER_PATH;
     const fullPath = base + folderPath;
     exec(`start "" "${fullPath}"`);
 }
@@ -99,7 +122,7 @@ const openFolder = (req) => {
 /* We add a new folder */
 const addFolder = (req, res) => {
     const { path, foldername } = req.body;
-    const base = process.env.BASE_FOLDER;
+    const base = process.env.BASE_FOLDER_PATH;
 
     if (!foldername) {
         res.status(400).send('Folder name is required');
@@ -138,7 +161,7 @@ const addFile = (req, res) => {
 /* We edit a folder name or file name */
 const edit = (req, res) => {
     const { path, oldFileName, newName } = req.body;
-    const base = process.env.BASE_FOLDER;
+    const base = process.env.BASE_FOLDER_PATH;
 
     let folderPath;
 
@@ -160,7 +183,7 @@ const edit = (req, res) => {
 /* We remove a folder or file */
 const remove = (req, res) => {
     const { path, foldername, dir } = req.body;
-    const base = process.env.BASE_FOLDER;
+    const base = process.env.BASE_FOLDER_PATH;
 
     let newPath;
 
@@ -183,6 +206,7 @@ const remove = (req, res) => {
 
 module.exports = {
     all,
+    images,
     openFile,
     openFolder,
     addFolder,

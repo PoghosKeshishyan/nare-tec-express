@@ -13,32 +13,6 @@ const all = async (req, res) => {
     }
 };
 
-/* Retrieve a specific year from the database */
-const year = async (req, res) => {
-    const id = req.params.id;
-
-    try {
-        const year = await prisma.year.findUnique({
-            where: {
-                id,
-            },
-        });
-
-        if (!year) {
-            return res.status(404).json({
-                message: 'Year not found',
-            });
-        }
-
-        res.status(200).json(year);
-    } catch (error) {
-        res.status(500).json({
-            message: 'Failed to retrieve the year data',
-            error,
-        });
-    }
-};
-
 /* Add a new year to the database */
 const add = async (req, res) => {
     const data = req.body;
@@ -116,7 +90,6 @@ const remove = async (req, res) => {
 
 module.exports = {
     all,
-    year,
     add,
     edit,
     remove,

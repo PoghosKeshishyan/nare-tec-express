@@ -23,6 +23,6 @@ app.use('/api/month', require('./routes/months'));
 app.use('/api/year', require('./routes/years'));
 app.use('/api/story', require('./routes/stories'));
 app.use('/api/week', require('./routes/weeks'));
-app.use('/api/file', require('./routes/files'));
+app.use('/api/files', require('./routes/files'));
 
 module.exports = app;

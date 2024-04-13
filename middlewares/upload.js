@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
             return;
         }
 
-        const fullPath = process.env.BASE_FOLDER + path;
+        const fullPath = process.env.BASE_FOLDER_PATH + path;
 
         if (!fs.existsSync(fullPath)) {
             fs.mkdirSync(fullPath, { recursive: true });
