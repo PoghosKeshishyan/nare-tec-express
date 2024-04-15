@@ -40,9 +40,36 @@ const child = async (req, res) => {
     }
 };
 
+/* Retrieve a specific child by parent ID from the database */
+const byParentId = async (req, res) => {
+    const parent_id = req.query.parent_id;
+
+    try {
+        const children = await prisma.child.findMany({
+            where: {
+                parent_id,
+            },
+        });
+
+        if (!children) {
+            return res.status(404).json({
+                message: 'Child not found',
+            });
+        }
+
+        res.status(200).json(children);
+    } catch (error) {
+        res.status(500).json({
+            message: 'Failed to retrieve the child data',
+            error,
+        });
+    }
+};
+
 /* Add a new child to the database */
 const add = async (req, res) => {
-    const data = req.body;
+    let data = req.body;
+    data.number_of_hours = parseInt(data.number_of_hours);
 
     if (
         !data.name ||
@@ -174,6 +201,7 @@ const remove = async (req, res) => {
 module.exports = {
     all,
     child,
+    byParentId,
     add,
     edit,
     remove,
