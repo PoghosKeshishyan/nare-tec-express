@@ -6,12 +6,13 @@ const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         const { path } = req.query;
 
-        if (!path) {
-            cb(new Error('Path not provided'), null);
-            return;
-        }
+        let fullPath;
 
-        const fullPath = process.env.BASE_FOLDER_PATH + path;
+        if (path) {
+            fullPath= process.env.BASE_FOLDER_PATH + path
+        } else {
+            fullPath = 'public/images';
+        }
 
         if (!fs.existsSync(fullPath)) {
             fs.mkdirSync(fullPath, { recursive: true });

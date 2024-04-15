@@ -1,23 +1,5 @@
 const { prisma } = require('../prisma/prisma-client');
 
-/* Retrieve all weeks from the database */
-const all = async (req, res) => {
-    try {
-        const weeks = await prisma.week.findMany({
-            include: {
-                days: true,
-            },
-        });
-
-        res.status(200).json(weeks);
-    } catch (error) {
-        res.status(500).json({
-            message: 'Failed to fetch weeks from the database',
-            error,
-        });
-    }
-};
-
 /* Retrieve a specific week by child ID from the database */
 const weekByChildId = async (req, res) => {
     const child_id = req.params.child_id;
@@ -125,7 +107,6 @@ const edit = async (req, res) => {
 };
 
 module.exports = {
-    all,
     weekByChildId,
     weekByParentId,
     edit,

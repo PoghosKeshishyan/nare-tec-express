@@ -67,7 +67,7 @@ const images = (req, res) => {
             imageUrls[imageName] = `/images/${file}`;
         });
 
-        res.json({ images: imageUrls });
+        res.json(imageUrls);
     });
 };
 
@@ -134,7 +134,7 @@ const addFolder = (req, res) => {
     if (path) {
         folderPath = `${base}${path}/${foldername}`;
     } else {
-        folderPath = base + foldername;
+        folderPath = `${base}/${foldername}`;
     }
 
     /* Check if folder already exists */
@@ -143,7 +143,7 @@ const addFolder = (req, res) => {
         return;
     }
 
-    // Create the folder
+    /* Create the folder */
     fs.mkdirSync(folderPath);
     res.status(201).send('Folder created successfully');
 }
@@ -151,6 +151,7 @@ const addFolder = (req, res) => {
 /* We add a new file */
 const addFile = (req, res) => {
     const file = req.file;
+    
     if (!file) {
         return res.status(400).json({ error: 'No file uploaded' });
     }

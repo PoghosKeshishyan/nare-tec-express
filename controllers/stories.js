@@ -24,12 +24,6 @@ const byYear = async (req, res) => {
             },
         });
 
-        if (!story.length) {
-            return res.status(404).json({
-                message: `Story for the year ${year} not found`,
-            });
-        }
-
         res.status(200).json(story);
     } catch (error) {
         res.status(500).json({
