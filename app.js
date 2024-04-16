@@ -31,8 +31,8 @@ app.use('/api/year', require('./routes/years'));
 app.use('/api/story', require('./routes/stories'));
 app.use('/api/week', require('./routes/weeks'));
 app.use('/api/files', require('./routes/files'));
-app.use('/api/endpoints', require('./routes/endpoints'));
 app.use('/api/send-email', require('./routes/sendEmail'));
+app.use('/api/endpoints', require('./routes/endpoints'));
 
 /* Call the setupFolder function to initialize the folder structure */
 setupProjectFolder();

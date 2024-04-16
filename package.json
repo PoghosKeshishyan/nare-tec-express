@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "server": "concurrently \"nodemon ./bin/www\" \"npx prisma studio\""
+    "server": "nodemon ./bin/www",
+    "sqlite": "npx prisma studio"
   },
   "dependencies": {
     "@prisma/client": "^5.12.1",
-    "concurrently": "^8.2.2",
     "cookie-parser": "~1.4.4",
     "cors": "^2.8.5",
     "debug": "~2.6.9",

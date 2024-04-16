@@ -36,6 +36,7 @@ const byYear = async (req, res) => {
 /* Add a new story to the database */
 const add = async (req, res) => {
     const data = req.body;
+    data.year = parseInt(data.year);
    
     if (!data.amount || !data.parent_name || !data.payment_date || !data.year) {
         return res.status(400).json({

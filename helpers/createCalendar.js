@@ -101,9 +101,9 @@ const generateCalendar = (parent_id, child_id, child_name) => {
             week: 6,
             month: 'January', /* Hardcode month as January */
             year: 2024, /* Hardcode year if needed */
-            parent_id: '1',
-            child_id: 'ch1aa',
-            child_name: 'Katine Moroza',
+            parent_id: '',
+            child_id: '',
+            child_name: '',
             dates: 'Sat 27 - Fri 2', /* Update the date range as needed */
             total_time_in_week: '0', /* Assuming zero initially */
             days: [
