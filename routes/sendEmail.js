@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { sendEmail, paymentConfirm } = require('../controllers/sendEmail'); 
+const { coupon, paymentConfirm } = require('../controllers/sendEmail'); 
 
-router.post('/coupon', sendEmail);
+router.post('/coupon', coupon);
 router.post('/payment-confirm', paymentConfirm);
 
 module.exports = router;

@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 const { squareNumbers } = require('../helpers/squareNumbers');
 
-const sendEmail = async (req, res) => {
+const coupon = async (req, res) => {
     try {
         const formData = req.body;
 
@@ -31,24 +31,20 @@ const sendEmail = async (req, res) => {
             .container {
                 border: 2px solid;
                 margin-top: 0;
+                text-align: end;
             }
             
+            .container .logo {
+                width: 100px;
+            }
+
             .container .title {
-                position: relative;
-                padding: 20px 0;
+                width: 100%;
+                padding: 0 0 20px 0;
                 font-size: 1.2rem;
                 text-align: center;
-            }
-            
-            .container .title .logo {
-                position: absolute;
-                width: 100px;
-                top: 0;
-                right: 0;
-            }
-            
-            .container .title .logo img {
-                width: 100%;
+                padding-top: -50px;
+                margin-top: -50px;
             }
             
             .container .client_info p {
@@ -56,6 +52,7 @@ const sendEmail = async (req, res) => {
                 font-size: 1.1rem;
                 margin-left: 20px;
                 margin-bottom: 10px;
+                text-align: left;
             }
             
             .container .child:last-child {
@@ -165,14 +162,11 @@ const sendEmail = async (req, res) => {
                 <div class="MessageBox">
                     <p class="message">${formData.message1}</p>
             
-                    <div class="container">
-            
+                    <div class="container">           
+                        <img src="cid:image1" class="logo" alt='logo' />
+
                         <div class='title'>
                             <h3>${formData.title} Weekly Bill <br /> Lic. 343625479</h3>
-            
-                            <div class='logo'>
-                                <img src="http://localhost:8000/images/logo.jpg" alt='logo' />
-                            </div>
                         </div>
             
                         <div class='client_info'>
@@ -209,6 +203,11 @@ const sendEmail = async (req, res) => {
             to: formData.parent_email,
             subject: formData.subject,
             html,
+            attachments: [{
+                filename: formData.logo,
+                path: `http://localhost:8000/${formData.logo}`,
+                cid: 'image1' /* Unique identifier of the image to be inserted into HTML */
+            }]
         };
 
         await transporter.sendMail(mailOptions); /* Sending a letter */
@@ -251,6 +250,6 @@ const paymentConfirm = async (req, res) => {
 }
 
 module.exports = {
-    sendEmail,
+    coupon,
     paymentConfirm,
 };
