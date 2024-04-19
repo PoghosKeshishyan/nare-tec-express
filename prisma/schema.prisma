@@ -39,7 +39,7 @@ model Child {
   number_of_hours Int
   name            String
   enrollment      String
-  discharge       String  @default("-")
+  discharge       String
   birth           String
   parent          Parent? @relation(fields: [parent_id], references: [id])
   parent_id       String?
