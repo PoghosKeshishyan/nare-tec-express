@@ -29,7 +29,7 @@ CREATE TABLE "Child" (
     "number_of_hours" INTEGER NOT NULL,
     "name" TEXT NOT NULL,
     "enrollment" TEXT NOT NULL,
-    "discharge" TEXT NOT NULL DEFAULT '-',
+    "discharge" TEXT NOT NULL,
     "birth" TEXT NOT NULL,
     "parent_id" TEXT,
     CONSTRAINT "Child_parent_id_fkey" FOREIGN KEY ("parent_id") REFERENCES "Parent" ("id") ON DELETE SET NULL ON UPDATE CASCADE

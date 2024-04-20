@@ -25,26 +25,31 @@ const coupon = async (req, res) => {
 
         const stylesheets = `
             .message {
-                font-size: 1.2rem;
+                font-size: 2rem;
             }
             
             .container {
+                width: 1000px;
+                min-width: 1000px;
                 border: 2px solid;
                 margin-top: 0;
-                text-align: end;
+            }
+            
+            .container .title {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                font-size: 1.2rem;
+            }
+            
+            .container .title h3 {
+                text-align: center;
+                width: 100%;
             }
             
             .container .logo {
                 width: 100px;
-            }
-
-            .container .title {
-                width: 100%;
-                padding: 0 0 20px 0;
-                font-size: 1.2rem;
-                text-align: center;
-                padding-top: -50px;
-                margin-top: -50px;
+                height: 100px;
             }
             
             .container .client_info p {
@@ -93,31 +98,35 @@ const coupon = async (req, res) => {
                 border-bottom: 1px solid;
                 padding: 5px;
             }
-            
-            .container .child:last-child table td,
-            .container .child:last-child table th {
-                border-bottom: none;
-            }
-            
+
             .table_total .first {
-                width: 55%;
                 text-align: start;
-            }
-            
-            .table_total tr td {
-                width: 30%;
-                border: none;
+                border-right: none;
             }
         `;
 
-        const childInfoHtml = formData.children.map(child => {
+        const childInfoHtml = formData.children.map((child, index, array) => {
+            const isLastIteration = index === array.length - 1;
+
+            let totalDueRow = '';
+
+            if (isLastIteration) {
+                totalDueRow = `
+                    <tr class="table_total">
+                        <td class="first">Total Due for Week:</td>
+                        <td colspan="4">${formData.dates_interval}</td>
+                        <td>${calculateTotalAmount()}</td>
+                    </tr>
+                `;
+            }
+
             return `
                 <div class="child">
-
+        
                     <div class='client_info'>
                         <p>Child's name: <b>${child.child_name}</b></p>
                     </div>
-
+        
                     <table className="SendEmailTable">
                         <thead>
                             <tr>
@@ -137,7 +146,7 @@ const coupon = async (req, res) => {
                                 <td>${child.total_days}</td>
                                 <td>${child.total_time_in_week}</td>
                                 <td>${child.costHour}</td>
-                                <td>${squareNumbers(Number(child.total_time_in_week), Number(child.costHour.slice(1))).toString()}</td>
+                                <td>$${squareNumbers(Number(child.total_time_in_week), Number(child.costHour.slice(1))).toString()}</td>
                             </tr>
         
                             <tr>
@@ -148,6 +157,8 @@ const coupon = async (req, res) => {
                                 <td>${child.costHourExt}</td>
                                 <td>${child.amountExt}</td>
                             </tr>
+        
+                            ${totalDueRow}
                         </tbody>
                     </table>
                 </div>
@@ -163,10 +174,10 @@ const coupon = async (req, res) => {
                     <p class="message">${formData.message1}</p>
             
                     <div class="container">           
-                        <img src="cid:image1" class="logo" alt='logo' />
 
                         <div class='title'>
                             <h3>${formData.title} Weekly Bill <br /> Lic. 343625479</h3>
+                            <img src="cid:image1" class="logo" alt='logo' />
                         </div>
             
                         <div class='client_info'>
@@ -174,18 +185,9 @@ const coupon = async (req, res) => {
                         </div>
             
                         ${childInfoHtml}
-                        
-                        <table class="table_total">
-                            <tr>
-                                <td class="first">Total Due for Week:</td>
-                                <td>${formData.dates_interval}</td>
-                                <td>${calculateTotalAmount()}</td>
-                            </tr>
-                        </table>  
-            
                     </div>
             
-                    <p class="message">${formData.message2}</p>
+                    <p class="message">${formData.message2.split('\n').join('<br>')}</p>
                 </div>
             </body>
         </html>`;
