@@ -1,6 +1,6 @@
 /* Function for creating a calendar for 2024-2050 */
 
-const generateCalendar = (parent_id, child_id, child_name) => {
+const generateCalendar = (parent_id, child_id, child_name, cost_for_per_hour) => {
     /* Helper functions */
     function getISOWeek(date) {
         const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
@@ -75,6 +75,7 @@ const generateCalendar = (parent_id, child_id, child_name) => {
                 parent_id,
                 child_id,
                 child_name,
+                cost_for_per_hour,
                 dates: formatDateRange(sundayDate, currentDate),
                 total_time_in_week: '0',
                 total_days: 0,
@@ -104,6 +105,7 @@ const generateCalendar = (parent_id, child_id, child_name) => {
             parent_id: '',
             child_id: '',
             child_name: '',
+            cost_for_per_hour,
             dates: 'Sat 27 - Fri 2', /* Update the date range as needed */
             total_time_in_week: '0', /* Assuming zero initially */
             days: [

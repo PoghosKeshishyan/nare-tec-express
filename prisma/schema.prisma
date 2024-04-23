@@ -35,15 +35,16 @@ model Parent {
 }
 
 model Child {
-  id              String  @id @default(uuid())
-  number_of_hours Int
-  name            String
-  enrollment      String
-  discharge       String
-  birth           String
-  parent          Parent? @relation(fields: [parent_id], references: [id])
-  parent_id       String?
-  Week            Week[]
+  id                String  @id @default(uuid())
+  number_of_hours   Int
+  cost_for_per_hour String
+  name              String
+  enrollment        String
+  discharge         String
+  birth             String
+  parent            Parent? @relation(fields: [parent_id], references: [id])
+  parent_id         String?
+  Week              Week[]
 }
 
 model Month {
@@ -74,6 +75,8 @@ model Week {
   child              Child?  @relation(fields: [child_id], references: [id])
   child_id           String?
   child_name         String
+  number_of_hours    Int
+  cost_for_per_hour  String
   dates              String
   total_time_in_week String
   total_days         Int

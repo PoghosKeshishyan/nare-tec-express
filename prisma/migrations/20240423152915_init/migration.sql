@@ -27,6 +27,7 @@ CREATE TABLE "Parent" (
 CREATE TABLE "Child" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "number_of_hours" INTEGER NOT NULL,
+    "cost_for_per_hour" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "enrollment" TEXT NOT NULL,
     "discharge" TEXT NOT NULL,
@@ -65,6 +66,8 @@ CREATE TABLE "Week" (
     "parent_id" TEXT,
     "child_id" TEXT,
     "child_name" TEXT NOT NULL,
+    "number_of_hours" INTEGER NOT NULL,
+    "cost_for_per_hour" TEXT NOT NULL,
     "dates" TEXT NOT NULL,
     "total_time_in_week" TEXT NOT NULL,
     "total_days" INTEGER NOT NULL,

@@ -73,11 +73,12 @@ const add = async (req, res) => {
 
     if (
         !data.name ||
-        !data.number_of_hours ||
-        !data.enrollment ||
-        !data.discharge ||
         !data.birth ||
-        !data.parent_id
+        !data.parent_id ||
+        !data.discharge ||
+        !data.enrollment ||
+        !data.number_of_hours ||
+        !data.cost_for_per_hour
     ) {
         return res.status(400).json({
             message: 'All fields are required for adding a new child',
@@ -91,7 +92,7 @@ const add = async (req, res) => {
         });
 
         /* Call generateCalendar function */
-        const calendar = generateCalendar(data.parent_id, child.id, data.name);
+        const calendar = generateCalendar(data.parent_id, child.id, data.name, data.cost_for_per_hour);
 
         /* Create the week using the generated calendar */
         for (const weekData of calendar) {
@@ -111,7 +112,9 @@ const add = async (req, res) => {
                     parent_id: weekData.parent_id,
                     child_id: weekData.child_id,
                     child_name: weekData.child_name,
+                    number_of_hours: parseInt(data.number_of_hours),
                     dates: weekData.dates,
+                    cost_for_per_hour: weekData.cost_for_per_hour,
                     total_time_in_week: weekData.total_time_in_week,
                     total_days: weekData.total_days,
                     days: {
