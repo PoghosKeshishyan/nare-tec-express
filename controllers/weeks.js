@@ -84,7 +84,6 @@ const edit = async (req, res) => {
                             arrived: day.arrived,
                             isGone: day.isGone,
                             completed: day.completed,
-                            disabled: day.disabled,
                         },
                     })),
                 },

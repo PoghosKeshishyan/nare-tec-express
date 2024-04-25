@@ -1,6 +1,6 @@
 /* Function for creating a calendar for 2024-2050 */
 
-const generateCalendar = (parent_id, child_id, child_name, cost_for_per_hour) => {
+const generateCalendar = (parent_id, child_id) => {
     /* Helper functions */
     function getISOWeek(date) {
         const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
@@ -30,24 +30,26 @@ const generateCalendar = (parent_id, child_id, child_name, cost_for_per_hour) =>
 
     function generateDays(startDate, numDays) {
         const days = [];
-
+        const currentDate = new Date(startDate);
+        
         for (let i = 0; i < numDays; i++) {
-            const currentDate = addDays(startDate, i);
-
+            const dayOfMonth = currentDate.getDate();
+            const currentMonth = currentDate.getMonth();
+        
             const dayObj = {
-                title: getDayTitle(currentDate),
+                title: `${getDayTitle(currentDate)}/${getMonthName(currentMonth)}`,
                 arrived: '',
                 isGone: '',
                 completed: false,
-                disabled: false
             };
-
+        
             days.push(dayObj);
+            currentDate.setDate(dayOfMonth + 1);
         }
-
+        
         return days;
     }
-
+    
     function getDayTitle(date) {
         const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         const dayIndex = date.getDay();
@@ -74,8 +76,6 @@ const generateCalendar = (parent_id, child_id, child_name, cost_for_per_hour) =>
                 year: currentDate.getFullYear(),
                 parent_id,
                 child_id,
-                child_name,
-                cost_for_per_hour,
                 dates: formatDateRange(sundayDate, currentDate),
                 total_time_in_week: '0',
                 total_days: 0,
@@ -104,8 +104,6 @@ const generateCalendar = (parent_id, child_id, child_name, cost_for_per_hour) =>
             year: 2024, /* Hardcode year if needed */
             parent_id: '',
             child_id: '',
-            child_name: '',
-            cost_for_per_hour,
             dates: 'Sat 27 - Fri 2', /* Update the date range as needed */
             total_time_in_week: '0', /* Assuming zero initially */
             days: [

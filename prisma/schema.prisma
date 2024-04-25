@@ -32,6 +32,7 @@ model Parent {
   email     String
   Child     Child[]
   Week      Week[]
+  Story     Story[]
 }
 
 model Child {
@@ -58,9 +59,10 @@ model Year {
 }
 
 model Story {
-  id           String @id @default(uuid())
+  id           String  @id @default(uuid())
   amount       String
-  parent_name  String
+  parent       Parent? @relation(fields: [parent_id], references: [id])
+  parent_id    String?
   payment_date String
   year         Int
 }
@@ -74,9 +76,6 @@ model Week {
   parent_id          String?
   child              Child?  @relation(fields: [child_id], references: [id])
   child_id           String?
-  child_name         String
-  number_of_hours    Int
-  cost_for_per_hour  String
   dates              String
   total_time_in_week String
   total_days         Int
@@ -89,7 +88,6 @@ model Day {
   arrived   String?
   isGone    String?
   completed Boolean
-  disabled  Boolean
   week      Week    @relation(fields: [week_id], references: [id])
   week_id   String
 }

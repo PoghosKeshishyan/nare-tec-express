@@ -92,7 +92,7 @@ const add = async (req, res) => {
         });
 
         /* Call generateCalendar function */
-        const calendar = generateCalendar(data.parent_id, child.id, data.name, data.cost_for_per_hour);
+        const calendar = generateCalendar(data.parent_id, child.id);
 
         /* Create the week using the generated calendar */
         for (const weekData of calendar) {
@@ -101,7 +101,6 @@ const add = async (req, res) => {
                 arrived: '',
                 isGone: '',
                 completed: false,
-                disabled:  false,
             }));
 
             await prisma.week.create({
@@ -111,10 +110,7 @@ const add = async (req, res) => {
                     year: weekData.year,
                     parent_id: weekData.parent_id,
                     child_id: weekData.child_id,
-                    child_name: weekData.child_name,
-                    number_of_hours: parseInt(data.number_of_hours),
                     dates: weekData.dates,
-                    cost_for_per_hour: weekData.cost_for_per_hour,
                     total_time_in_week: weekData.total_time_in_week,
                     total_days: weekData.total_days,
                     days: {

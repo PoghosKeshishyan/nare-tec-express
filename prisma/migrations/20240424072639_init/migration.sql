@@ -52,9 +52,10 @@ CREATE TABLE "Year" (
 CREATE TABLE "Story" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "amount" TEXT NOT NULL,
-    "parent_name" TEXT NOT NULL,
+    "parent_id" TEXT,
     "payment_date" TEXT NOT NULL,
-    "year" INTEGER NOT NULL
+    "year" INTEGER NOT NULL,
+    CONSTRAINT "Story_parent_id_fkey" FOREIGN KEY ("parent_id") REFERENCES "Parent" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -65,9 +66,6 @@ CREATE TABLE "Week" (
     "year" INTEGER NOT NULL,
     "parent_id" TEXT,
     "child_id" TEXT,
-    "child_name" TEXT NOT NULL,
-    "number_of_hours" INTEGER NOT NULL,
-    "cost_for_per_hour" TEXT NOT NULL,
     "dates" TEXT NOT NULL,
     "total_time_in_week" TEXT NOT NULL,
     "total_days" INTEGER NOT NULL,
@@ -82,7 +80,6 @@ CREATE TABLE "Day" (
     "arrived" TEXT,
     "isGone" TEXT,
     "completed" BOOLEAN NOT NULL,
-    "disabled" BOOLEAN NOT NULL,
     "week_id" TEXT NOT NULL,
     CONSTRAINT "Day_week_id_fkey" FOREIGN KEY ("week_id") REFERENCES "Week" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
