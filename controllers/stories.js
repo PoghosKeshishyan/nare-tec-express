@@ -38,7 +38,7 @@ const add = async (req, res) => {
     const data = req.body;
     data.year = parseInt(data.year);
    
-    if (!data.amount || !data.parent_name || !data.payment_date || !data.year) {
+    if (!data.amount || !data.parent_id || !data.payment_date || !data.year) {
         return res.status(400).json({
             message: 'All fields are required for adding a new story',
         });
