@@ -149,7 +149,7 @@ const coupon = async (req, res) => {
                                 <td>${child.number_of_weeks_extended}</td>
                                 <td class="odd">${child.total_days_extended}</td>
                                 <td>${child.hours_count_extended}</td>
-                                <td class="odd">${child.cost_for_per_hour_extended}</td>
+                                <td class="odd">${child.cost_for_per_hour_extended} (Per minute)</td>
                                 <td>${child.amount_extended}</td>
                             </tr>
         

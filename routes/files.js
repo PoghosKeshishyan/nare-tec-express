@@ -3,7 +3,6 @@ const router = express.Router();
 const { upload } = require('../middlewares/upload');
 const { 
     all, 
-    images,
     openFile,
     openFolder, 
     addFolder, 
@@ -13,7 +12,6 @@ const {
 } = require('../controllers/files');
 
 router.get('/', all);
-router.get('/images', images);
 router.post('/open/file', openFile);
 router.post('/open/folder', openFolder);
 router.post('/add/folder', addFolder);

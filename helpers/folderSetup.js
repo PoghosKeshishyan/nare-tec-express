@@ -1,38 +1,31 @@
+/* Function for creating a project folder on boot */
+
 const fs = require('fs');
 const path = require('path');
 
 function setupProjectFolder() {
-  const desktopPath = path.join(require('os').homedir(), 'Desktop');
-
-  /* Path to the "nareⓀ files" folder */
-  const basePath = path.join(desktopPath, 'nareⓀ files');
+  const basePath = process.env.BASE_FOLDER_PATH;
 
   /* Check if the "nareⓀ files" folder exists */
   if (!fs.existsSync(basePath)) {
-    fs.mkdirSync(basePath); /* Create the "nareⓀ files" folder */
+    fs.mkdirSync(basePath);
 
     /* Create four subfolders inside "nareⓀ files" */
     for (let i = 1; i <= 4; i++) {
       fs.mkdirSync(path.join(basePath, `New folder (${i})`));
     }
 
-    /* Update the .env file with the correct path */
-    const envFilePath = path.join(__dirname, '../.env');
-    let envContent = fs.readFileSync(envFilePath, 'utf8');
+    /* Create a new folder inside "nareⓀ files" */
+    const additionalFolder = path.join(basePath, 'Images');
+    fs.mkdirSync(additionalFolder);
 
-    /* Check for the existence of BASE_FOLDER_PATH */
-    if (envContent.includes('BASE_FOLDER_PATH')) {
-      /* Remove the old BASE_FOLDER_PATH */
-      envContent = envContent.replace(/BASE_FOLDER_PATH=".*"\n/, '');
-    }
-
-    /* We replace the "\" character with a "/" to send to the React application */
-    const basePathEnv = basePath.replace(/\\/g, '/');
-
-    /* Add the new BASE_FOLDER_PATH */
-    envContent += `BASE_FOLDER_PATH="${basePathEnv}"\n`;
-    fs.writeFileSync(envFilePath, envContent);
+    /* Copy the content of logo.jpg from public/images to the new folder */
+    const sourceFile = path.join(__dirname, '../public/images/logo.jpg');
+    const destinationFile = path.join(additionalFolder, 'logo.jpg');
+    fs.copyFileSync(sourceFile, destinationFile);
   }
 }
 
-module.exports = setupProjectFolder;
+module.exports = {
+  setupProjectFolder,
+};

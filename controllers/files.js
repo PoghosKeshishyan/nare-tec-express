@@ -49,28 +49,6 @@ const all = (req, res) => {
     }
 };
 
-/* Retrieve URLs of all images from the 'public/images' directory */
-const images = (req, res) => {
-    const imageDir = path.join(__dirname, '../public/images');
-
-    fs.readdir(imageDir, (err, files) => {
-        if (err) {
-            console.error('Error reading images directory:', err);
-            res.status(500).json({ error: 'Internal Server Error' });
-            return;
-        }
-
-        const imageUrls = {};
-
-        files.forEach(file => {
-            const imageName = path.parse(file).name;
-            imageUrls[imageName] = `/images/${file}`;
-        });
-
-        res.json(imageUrls);
-    });
-};
-
 /* We open the file in the local version */
 const openFile = (req, res) => {
     const { path, filename } = req.body;
@@ -156,7 +134,9 @@ const addFile = (req, res) => {
         return res.status(400).json({ error: 'No file uploaded' });
     }
 
-    return res.status(200).json({ message: 'File uploaded successfully' });
+    return res.status(200).json({ 
+        message: 'File uploaded successfully',
+    });
 };
 
 /* We edit a folder name or file name */
@@ -207,7 +187,6 @@ const remove = (req, res) => {
 
 module.exports = {
     all,
-    images,
     openFile,
     openFolder,
     addFolder,

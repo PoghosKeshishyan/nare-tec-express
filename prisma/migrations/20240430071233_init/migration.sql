@@ -28,6 +28,7 @@ CREATE TABLE "Child" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "number_of_hours" INTEGER NOT NULL,
     "cost_for_per_hour" TEXT NOT NULL,
+    "cost_for_extended_minutes" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "enrollment" TEXT NOT NULL,
     "discharge" TEXT NOT NULL,

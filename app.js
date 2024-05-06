@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var cors = require('cors');
 var dotenv = require('dotenv');
-var setupProjectFolder = require('./helpers/folderSetup');
+var { setupProjectFolder } = require('./helpers/folderSetup');
 
 /* Load variables from the .env file */
 dotenv.config();
