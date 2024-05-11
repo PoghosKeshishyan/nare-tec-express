@@ -193,17 +193,17 @@ const coupon = async (req, res) => {
                 pass: process.env.EMAIL_PASSWORD,
             }
         });
-
+        
         const mailOptions = {
-            from: formData.proveider_email,
+            from: process.env.EMAIL_LOGIN,
             to: formData.parent_email,
             subject: formData.subject,
             html,
             attachments: [{
                 filename: formData.logo,
                 path: `${process.env.BASE_URL}${formData.logo}`,
-                cid: 'image1' /* Unique identifier of the image to be inserted into HTML */
-            }]
+                cid: 'image1' /* Уникальный идентификатор изображения для вставки в HTML */
+            }],
         };
 
         await transporter.sendMail(mailOptions); /* Sending a letter */
@@ -219,7 +219,7 @@ const coupon = async (req, res) => {
 
 const paymentConfirm = async (req, res) => {
     try {
-        const { subject, parent_email, provider_email, message } = req.body;
+        const { subject, parent_email, message } = req.body;
 
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -230,7 +230,7 @@ const paymentConfirm = async (req, res) => {
         });
 
         const mailOptions = {
-            from: provider_email,
+            from: process.env.EMAIL_LOGIN,
             to: parent_email,
             subject: subject,
             text: message,
